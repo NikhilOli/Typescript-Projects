@@ -5,7 +5,7 @@ import MovieDetail from "./pages/MovieDetail";
 import Navbar from "./components/Navbar";
 const App = () => {
   return (
-    <div>
+    <div className="bg-[#030637]">
       <Router>
         <Navbar/>
         <Routes>

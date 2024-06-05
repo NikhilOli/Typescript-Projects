@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
+
 
 const Navbar = () => {
   return (
@@ -17,12 +19,12 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex gap-4">
-            <Link to="/movies/popular">Popular</Link>
-            <Link to="/movies/top-rated">Top Rated</Link>
-            <Link to="/movies/upcoming">Upcoming</Link>
+            <Link to="/movies/popular" className="hover:text-[#BDBDD7]">Popular</Link>
+            <Link to="/movies/top-rated" className="hover:text-[#BDBDD7]">Top Rated</Link>
+            <Link to="/movies/upcoming" className="hover:text-[#BDBDD7]">Upcoming</Link>
           </div>
         </div>
-        <div className="text-black">LogoProfile</div>
+        <div className="text-black"><CgProfile size={24} className="cursor-pointer text-[#DDDDDD] hover:text-[#BDBDD7]  "/></div>
       </div>
     </div>
   );
