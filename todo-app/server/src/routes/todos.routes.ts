@@ -8,3 +8,5 @@ export const todosRouter = Router();
 todosRouter.post("/api/todos", TodoController.createTodo)
 todosRouter.get("/api/todos", TodoController.getTodos)
 todosRouter.get("/api/todos/:todoId", TodoController.getTodo)
+todosRouter.put("/api/todos/:todoId", TodoController.editTodo)
+todosRouter.delete("/api/todos/:todoId", TodoController.deleteTodo)
