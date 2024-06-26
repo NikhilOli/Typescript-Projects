@@ -10,6 +10,7 @@ import TaskColumn from './components/TaskColumn';
 
 function App() {
     const [todos, setTodos] = useState<TodoModel[]>([]);
+    const [activeCard, setActiveCard] = useState<string | null>(null);
 
     useEffect(() => {
         const getTodos = async () => {
@@ -32,9 +33,9 @@ function App() {
         <div className='bg-gray-800 min-h-screen text-white'>
             <Header />
             <main className='flex justify-evenly py-5 px-[8%]'>
-                <TaskColumn heading="To Do" icon={todoIcon} tasks={todoTasks} />
-                <TaskColumn heading="Doing" icon={doingIcon} tasks={doingTasks} />
-                <TaskColumn heading="Done" icon={doneIcon} tasks={doneTasks} />
+                <TaskColumn heading="To Do" icon={todoIcon} tasks={todoTasks} setActiveCard={setActiveCard} />
+                <TaskColumn heading="Doing" icon={doingIcon} tasks={doingTasks} setActiveCard={setActiveCard} />
+                <TaskColumn heading="Done" icon={doneIcon} tasks={doneTasks} setActiveCard={setActiveCard} />
             </main>
         </div>
     );

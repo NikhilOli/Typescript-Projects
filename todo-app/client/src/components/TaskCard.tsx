@@ -3,14 +3,16 @@ import deleteIcon from '../assets/delete.png';
 import Button from './Button';
 
 interface TaskCardProps {
-    task: string;
-    // status: string;
+    task: { _id: string, todo?: string };
+    setActiveCard: (id: string | null) => void;
+
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
     return (
-        <article className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 my-4 bg-gray-700 text-white'>
-            <p className='text-[20px] font-semibold mb-4'>{task}</p>
+        <article className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 my-4 bg-gray-700 text-white' 
+            onClick={() => setActiveCard(task._id)}>
+            <p className='text-[20px] font-semibold mb-4'>{task.todo || "No Task"}</p>
             <div className='flex justify-between items-center'>
                 <div className='flex gap-2'>
                     <Button title='HTML' onClick={() => {}} />
