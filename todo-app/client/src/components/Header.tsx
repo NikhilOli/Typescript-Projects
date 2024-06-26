@@ -30,16 +30,16 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className='flex items-center justify-center border-b-[1px] border-b-[#dcdcdc] my-10 py-10 bg-gray-800 text-white'>
+        <header className='flex items-center justify-center border-b-[1px] border-b-[#dcdcdc] my-10 py-10'>
             <form onSubmit={handleSubmit} className='w-[50%]'>
                 <input
                     onChange={handleTask}
-                    className='text-xl border rounded-md px-3 py-2 mb-4 w-full border-[#dfe3e6] bg-gray-700 text-white placeholder-gray-400 font-medium'
+                    className='text-xl border rounded-md px-3 py-2 mb-4 w-full border-[#dfe3e6] bg-[#f9f9f9] text-black placeholder-[#686868] font-medium'
                     type="text"
                     placeholder='Enter Your Task'
                 />
 
-                <div className='flex items-center justify-between gap-4'>
+                <div className='flex items-center justify-between'>
                     <div className='flex gap-2'>
                         <Button title="HTML" onClick={() => handleTag("HTML")} />
                         <Button title="CSS" onClick={() => handleTag("CSS")} />
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
                     <div className='flex items-center justify-center gap-3'>
                         <select
                             onChange={handleStatus}
-                            className='text-[16px] font-medium border-[1px] border-[#999] rounded w-[120px] h-[40px] px-[5px] bg-gray-700 text-white'
+                            className='text-[16px] font-medium border-[1px] border-[#999] rounded w-[120px] h-[40px] px-[5px] text-black bg-white'
                             name="status"
                             id="status"
                             value={status}
