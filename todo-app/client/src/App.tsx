@@ -37,6 +37,7 @@ function App() {
                 <TaskColumn heading="Doing" icon={doingIcon} tasks={doingTasks} setActiveCard={setActiveCard} />
                 <TaskColumn heading="Done" icon={doneIcon} tasks={doneTasks} setActiveCard={setActiveCard} />
             </main>
+            <h1>Active Card: {activeCard}</h1>
         </div>
     );
 }

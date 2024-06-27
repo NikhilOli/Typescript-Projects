@@ -10,8 +10,7 @@ interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
     return (
-        <article className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 my-4 bg-gray-700 text-white' 
-            onClick={() => setActiveCard(task._id)}>
+        <article className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 my-4 bg-gray-700 text-white cursor-grabbing active:opacity-[0.7] active:border-2 active:border-black' draggable onDragStart={() => setActiveCard(task._id)} onDragEnd={() => setActiveCard(null)}>
             <p className='text-[20px] font-semibold mb-4'>{task.todo || "No Task"}</p>
             <div className='flex justify-between items-center'>
                 <div className='flex gap-2'>
