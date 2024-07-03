@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { TodoModel } from './models/TodoModel';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import TaskColumn from './components/TaskColumn';
 function App() {
     const [todos, setTodos] = useState<TodoModel[]>([]);
     const [activeCard, setActiveCard] = useState<string | null>(null);
+    const [currentDropTarget, setCurrentDropTarget] = useState<string | null>(null);
 
     useEffect(() => {
         const getTodos = async () => {
@@ -33,9 +34,9 @@ function App() {
         <div className='bg-gray-800 min-h-screen text-white'>
             <Header />
             <main className='flex justify-evenly py-5 px-[8%]'>
-                <TaskColumn heading="To Do" icon={todoIcon} tasks={todoTasks} setActiveCard={setActiveCard} />
-                <TaskColumn heading="Doing" icon={doingIcon} tasks={doingTasks} setActiveCard={setActiveCard} />
-                <TaskColumn heading="Done" icon={doneIcon} tasks={doneTasks} setActiveCard={setActiveCard} />
+                <TaskColumn heading="To Do" icon={todoIcon} tasks={todoTasks} setActiveCard={setActiveCard} currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} />
+                <TaskColumn heading="Doing" icon={doingIcon} tasks={doingTasks} setActiveCard={setActiveCard} currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} />
+                <TaskColumn heading="Done" icon={doneIcon} tasks={doneTasks} setActiveCard={setActiveCard} currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} />
             </main>
             <h1>Active Card: {activeCard}</h1>
         </div>
