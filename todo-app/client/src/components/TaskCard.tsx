@@ -3,12 +3,13 @@ import deleteIcon from '../assets/delete.png';
 import Button from './Button';
 
 interface TaskCardProps {
-    task: { _id: string, todo?: string };
+    task: { _id: string, todo: string, status: string };
     setActiveCard: (id: string | null) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
-    const handleDragStart = () => {
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.setData('text/plain', task._id);
         setActiveCard(task._id);
     };
 
@@ -18,12 +19,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
 
     return (
         <article
-            className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] bg-gray-700 text-white cursor-grabbing active:opacity-[0.7] active:border-2 active:border-black'
             draggable
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
+            className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] bg-gray-700 text-white cursor-grabbing active:opacity-[0.7] active:border-2 active:border-black'
         >
-            <p className='text-[20px] font-semibold mb-4'>{task.todo || "No Task"}</p>
+            <p className='text-[20px] font-semibold mb-4'>{task.todo}</p>
             <div className='flex justify-between items-center'>
                 <div className='flex gap-2'>
                     <Button title='HTML' onClick={() => {}} />

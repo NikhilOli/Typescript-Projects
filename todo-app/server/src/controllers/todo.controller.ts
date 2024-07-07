@@ -14,17 +14,36 @@ const getTodos: RequestHandler = async (req, res) =>  {
     }
 }
 
-const createTodo: RequestHandler = async (req, res) => {
-    const todo = req.body;
+const updateTodoStatus: RequestHandler = async (req, res) => {
+    const {todoId} = req.params;
+    const {status} = req.body;
     try {
         
-        const updatedTodo = Todo.create(todo)
-        res.status(201).json(updatedTodo)
+        const todo = await Todo.findById(todoId)
+        if (!todo) {
+            return res.status(404).json("Todo not found");
+        }
+        todo.status = status;
+        await todo.save()
+        res.status(200).json(todo)
 
     } catch (error ) {
-        throw new Error(`Error creating todo `);
+        console.error("Error updating todo status", error);
+        res.status(500).json({ message: "Error updating todo status" });
     }
 }
+const createTodo: RequestHandler = async (req, res) => {
+    const { todo } = req.body;
+    try {
+        const newTodo = new Todo({ todo });
+        const savedTodo = await newTodo.save();
+        res.status(201).json(savedTodo);
+    } catch (error) {
+        console.error("Error creating todo", error);
+        res.status(500).json({ message: "Error creating todo" });
+    }
+};
+
 
 const getTodo: RequestHandler = async (req, res) =>  {    
     const todoId = req.params.todoId;
@@ -76,4 +95,4 @@ const deleteTodo: RequestHandler = async (req, res) =>  {
 }
 
 
-export { getTodos, createTodo, getTodo, editTodo, deleteTodo }
+export { getTodos, updateTodoStatus, createTodo, getTodo, editTodo, deleteTodo }
