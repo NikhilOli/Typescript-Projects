@@ -1,18 +1,19 @@
 import React from 'react';
 import TaskCard from './TaskCard';
 import DropArea from './DropArea';
+import { TodoModel } from '../models/TodoModel';
 
 interface TaskColumnProps {
     heading: string;
     icon: string;
-    tasks: { _id: string, todo: string, status: string }[];
+    tasks: TodoModel[];
     setActiveCard: (id: string | null) => void;
     currentDropTarget: string | null;
     setCurrentDropTarget: (id: string | null) => void;
-    updateTodoStatus: (id: string, status: string) => void;
+    onDrop: (taskId: string, newStatus: string) => void;
 }
 
-const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, setActiveCard, currentDropTarget, setCurrentDropTarget, updateTodoStatus }) => {
+const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, setActiveCard, currentDropTarget, setCurrentDropTarget, onDrop }) => {
     return (
         <section className='w-1/3 mx-4'>
             <h2 className='flex items-center gap-2 font-bold text-white mb-[15px]'>
@@ -22,10 +23,9 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, setActive
             {tasks.map((task) => (
                 <React.Fragment key={task._id}>
                     <TaskCard task={task} setActiveCard={setActiveCard} />
-                    <DropArea currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} id={task._id} updateTodoStatus={updateTodoStatus} status={heading.toLowerCase()} />
                 </React.Fragment>
             ))}
-            <DropArea currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} id={`${heading}-bottom`} updateTodoStatus={updateTodoStatus} status={heading.toLowerCase()} />
+            <DropArea currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} id={`${heading}-bottom`} onDrop={onDrop} status={heading.toLowerCase()} />
         </section>
     );
 };

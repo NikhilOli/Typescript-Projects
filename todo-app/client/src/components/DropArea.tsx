@@ -1,47 +1,40 @@
 import React from 'react';
+import { useDrop, DropTargetMonitor } from 'react-dnd';
+import { TodoModel } from '../models/TodoModel';
 
 interface DropAreaProps {
     currentDropTarget: string | null;
     setCurrentDropTarget: (id: string | null) => void;
     id: string;
-    updateTodoStatus: (id: string, status: string) => void;
     status: string;
+    onDrop: (taskId: string, newStatus: string) => void;
 }
 
-const DropArea: React.FC<DropAreaProps> = ({ currentDropTarget, setCurrentDropTarget, id, updateTodoStatus, status }) => {
-    const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setCurrentDropTarget(id);
-    };
+const DropArea: React.FC<DropAreaProps> = ({ currentDropTarget, setCurrentDropTarget, id, status, onDrop }) => {
+    const [{ isOver }, drop] = useDrop({
+        accept: 'TASK',
+        drop: (item: { id: string, status: string }) => {
+            onDrop(item.id, status);
+        },
+        collect: (monitor: DropTargetMonitor) => ({
+            isOver: monitor.isOver(),
+        }),
+    });
 
-    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setCurrentDropTarget(null);
-    };
-
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-    };
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        const taskId = e.dataTransfer.getData('text/plain');
-        updateTodoStatus(taskId, status);
-        setCurrentDropTarget(null);
-    };
+    const isActive = isOver && currentDropTarget === id;
+    const borderColor = isActive ? '#dcdcdc' : 'transparent';
 
     return (
         <div
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            className={`border w-full ${currentDropTarget === id ? 'min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] opacity-100 active:border-2' : 'h-0 p-0 m-0 border-0 opacity-0'}`}
+            ref={drop}
+            className={`border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] opacity-100 ${isActive ? 'active:border-2' : 'h-0 p-0 m-0 border-0 opacity-0'}`}
+            style={{ borderColor }}
+            onDragEnter={() => setCurrentDropTarget(id)}
+            onDragLeave={() => setCurrentDropTarget(null)}
         >
-            {currentDropTarget === id && 'Drop Here'}
+            {isActive && 'Drop Here'}
         </div>
     );
 };
 
 export default DropArea;
-    

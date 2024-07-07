@@ -1,27 +1,32 @@
 import React from 'react';
+import { useDrag } from 'react-dnd';
 import deleteIcon from '../assets/delete.png';
 import Button from './Button';
+import { TodoModel } from '../models/TodoModel';
 
 interface TaskCardProps {
-    task: { _id: string, todo: string, status: string };
+    task: TodoModel;
     setActiveCard: (id: string | null) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
-    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-        e.dataTransfer.setData('text/plain', task._id);
-        setActiveCard(task._id);
-    };
+    const [{ isDragging }, drag] = useDrag({
+        type: 'TASK',
+        item: { id: task._id, status: task.status },
+        end: (item, monitor) => {
+            setActiveCard(null);
+        },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    });
 
-    const handleDragEnd = () => {
-        setActiveCard(null);
-    };
+    const opacity = isDragging ? 0.5 : 1;
 
     return (
         <article
-            draggable
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
+            ref={drag}
+            style={{ opacity }}
             className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] bg-gray-700 text-white cursor-grabbing active:opacity-[0.7] active:border-2 active:border-black'
         >
             <p className='text-[20px] font-semibold mb-4'>{task.todo}</p>
