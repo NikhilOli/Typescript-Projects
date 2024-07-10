@@ -7,13 +7,12 @@ interface TaskColumnProps {
     heading: string;
     icon: string;
     tasks: TodoModel[];
-    setActiveCard: (id: string | null) => void;
-    currentDropTarget: string | null;
-    setCurrentDropTarget: (id: string | null) => void;
     onDrop: (taskId: string, newStatus: string) => void;
+    onDelete: (taskId: string) => void; 
+
 }
 
-const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, setActiveCard, currentDropTarget, setCurrentDropTarget, onDrop }) => {
+const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, onDrop, onDelete }) => {
     return (
         <section className='w-1/3 mx-4'>
             <h2 className='flex items-center gap-2 font-bold text-white mb-[15px]'>
@@ -22,11 +21,12 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, setActive
             </h2>
             {tasks.map((task) => (
                 <React.Fragment key={task._id}>
-                    <TaskCard task={task} setActiveCard={setActiveCard} />
+                    <TaskCard task={task} onDelete={onDelete} />
                 </React.Fragment>
             ))}
-            <DropArea currentDropTarget={currentDropTarget} setCurrentDropTarget={setCurrentDropTarget} id={`${heading}-bottom`} onDrop={onDrop} status={heading.toLowerCase()} />
+            <DropArea onDrop={onDrop} status={heading.toLowerCase()} />
         </section>
+
     );
 };
 

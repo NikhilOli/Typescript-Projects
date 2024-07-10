@@ -3,25 +3,33 @@ import { useDrag } from 'react-dnd';
 import deleteIcon from '../assets/delete.png';
 import Button from './Button';
 import { TodoModel } from '../models/TodoModel';
+import axios from 'axios';
 
 interface TaskCardProps {
     task: TodoModel;
-    setActiveCard: (id: string | null) => void;
+    onDelete: (todoId: string) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
     const [{ isDragging }, drag] = useDrag({
         type: 'TASK',
         item: { id: task._id, status: task.status },
-        end: (item, monitor) => {
-            setActiveCard(null);
-        },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
         }),
     });
 
     const opacity = isDragging ? 0.5 : 1;
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`/api/todos/${task._id}`)
+            onDelete(task._id)
+            
+        } catch (error) {
+            console.error('Error deleting todo', error);
+            
+        }
+    }
 
     return (
         <article
@@ -35,7 +43,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, setActiveCard }) => {
                     <Button title='HTML' onClick={() => {}} />
                     <Button title='CSS' onClick={() => {}} />
                 </div>
-                <div className='w-[35px] h-[35px] rounded-full flex items-center justify-center cursor-pointer transition-all hover:bg-gray-600 ease-in-out'>
+                <div onClick={handleDelete} className='w-[35px] h-[35px] rounded-full flex items-center justify-center cursor-pointer transition-all hover:bg-gray-600 ease-in-out'>
                     <img className='w-5 opacity-50 duration-200 ease-in-out hover:opacity-80' src={deleteIcon} alt="Delete" />
                 </div>
             </div>
