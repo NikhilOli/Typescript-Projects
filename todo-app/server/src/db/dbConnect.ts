@@ -8,7 +8,7 @@ export const dbConnect = async () => {
             throw new Error('MONGO_URL is not defined in environment variables');
         }
 
-        await mongoose.connect(mongoUrl, { dbName: "toDo" });
+        await mongoose.connect(mongoUrl, { dbName: "tsTodoApp" });
         console.log("MongoDB connected successfully");
     } catch (error) {
         if (error instanceof Error) {
