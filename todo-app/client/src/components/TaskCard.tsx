@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import deleteIcon from '../assets/delete.png';
 import Button from './Button';
@@ -11,6 +11,8 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
+    const [isDeleting, setIsDeleting] = useState(false);
+
     const [{ isDragging }, drag] = useDrag({
         type: 'TASK',
         item: { id: task._id, status: task.status },
@@ -21,15 +23,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
 
     const opacity = isDragging ? 0.5 : 1;
     const handleDelete = async () => {
+        if (isDeleting) return;
+        setIsDeleting(true);
         try {
-            await axios.delete(`/api/todos/${task._id}`)
-            onDelete(task._id)
-            
+            await axios.delete(`/api/todos/${task._id}`);
+            onDelete(task._id);
         } catch (error) {
             console.error('Error deleting todo', error);
-            
+        } finally {
+            setIsDeleting(false);
         }
-    }
+    };
 
     return (
         <article

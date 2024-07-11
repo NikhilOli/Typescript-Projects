@@ -12,12 +12,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
     const [todos, setTodos] = useState<TodoModel[]>([]);
-    const [activeCard, setActiveCard] = useState<string | null>(null);
 
     const getTodos = async () => {
         try {
             const res = await axios.get<TodoModel[]>('/api/todos');
             setTodos(res.data);
+            // console.log('Todos fetched:', res.data);
         } catch (error) {
             console.error('Error fetching todos', error);
         }
@@ -46,14 +46,9 @@ function App() {
     };
 
     const handleDelete = async (todoId: string) => {
-        try {
-            await axios.delete(`/api/todos/${todoId}`);
-            getTodos(); // Refresh todos after deletion
-        } catch (error) {
-            console.error('Error deleting todo', error);
-        }
+        setTodos(existingTodos => existingTodos.filter(existingTodo => existingTodo._id !== todoId));
+        // console.log('Todo deleted, updating state');
     };
-
 
     return (
         <DndProvider backend={HTML5Backend}>

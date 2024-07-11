@@ -80,9 +80,7 @@ const editTodo: RequestHandler = async (req, res) => {
 };
 
 const deleteTodo: RequestHandler = async (req, res) => {
-    const { todoId } = req.params;
-    console.log(todoId);
-    
+    const { todoId } = req.params;    
     try {
         const todo = await Todo.findByIdAndDelete(todoId);
         if (!todo) {
