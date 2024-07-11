@@ -3,11 +3,15 @@ import React from 'react';
 interface ButtonProps {
     title: string;
     onClick: () => void;
+    className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ title, onClick, className }) => {
     return (
-        <button onClick={onClick} className='bg-[#f9f9f9] text-sm font-medium py-[2px] rounded px-[10px] border border-[#dfe3e6] cursor-pointer text-gray-800'>
+        <button
+            className={`p-2 rounded-lg transition-all hover:opacity-80 ${className}`}
+            onClick={onClick}
+        >
             {title}
         </button>
     );

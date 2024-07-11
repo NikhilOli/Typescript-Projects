@@ -49,15 +49,19 @@ function App() {
         setTodos(existingTodos => existingTodos.filter(existingTodo => existingTodo._id !== todoId));
         // console.log('Todo deleted, updating state');
     };
+    const handleUpdate = (updatedTask: TodoModel) => {
+        setTodos(existingTodos => existingTodos.map(todo => todo._id === updatedTask._id ? updatedTask : todo));
+        console.log('Todo updated, updating state');
+    };
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className='bg-gray-800 min-h-screen text-white'>
                 <Header refreshTodos={getTodos} />
                 <main className='flex justify-evenly py-5 px-[8%]'>
-                    <TaskColumn heading="To Do" icon={todoIcon} tasks={todos.filter(todo => todo.status === 'todo')} onDrop={handleDrop} onDelete={handleDelete} />
-                    <TaskColumn heading="Doing" icon={doingIcon} tasks={todos.filter(todo => todo.status === 'doing')} onDrop={handleDrop} onDelete={handleDelete} />
-                    <TaskColumn heading="Done" icon={doneIcon} tasks={todos.filter(todo => todo.status === 'done')} onDrop={handleDrop} onDelete={handleDelete}/>
+                    <TaskColumn heading="To Do" icon={todoIcon} tasks={todos.filter(todo => todo.status === 'todo')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate} />
+                    <TaskColumn heading="Doing" icon={doingIcon} tasks={todos.filter(todo => todo.status === 'doing')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate} />
+                    <TaskColumn heading="Done" icon={doneIcon} tasks={todos.filter(todo => todo.status === 'done')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate}/>
                 </main>
             </div>
         </DndProvider>
