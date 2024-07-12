@@ -17,7 +17,7 @@ const registerUser: RequestHandler<RegisterUserBody> = async (req, res) => {
     }
     try {
 
-        const existingUserName = await User.findOne({ email });
+        const existingUserName = await User.findOne({ username });
         if (existingUserName) {
             return res.json({ message: "User with this username already exists. Enter another username" });
         }
@@ -36,4 +36,33 @@ const registerUser: RequestHandler<RegisterUserBody> = async (req, res) => {
     }
 };
 
-export { registerUser };
+const loginUser: RequestHandler = async (req, res) => {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+        console.log("All fields required");
+        return res.json({ message: "Please fill up all required fields" });
+    }
+    try {
+        console.log(email, password);
+        
+        const user = await User.findOne({email}).select("password")
+        if (!user) {
+            return res.status(404).json({message: "User not found"})
+        }
+        console.log(user);
+        
+
+        const verifyPassword = await bcrypt.compare(password, user.password)
+        if (!verifyPassword) {
+            return res.status(400).json({message: "Password mismatch"})
+        }
+        
+        res.status(200).json({message: "Login successful", user})
+    } catch (error) {
+        console.error("Error creating todo", error);
+        res.status(500).json({ message: "Error loggin user" });
+    }
+};
+
+export { registerUser, loginUser };
