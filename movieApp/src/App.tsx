@@ -10,8 +10,8 @@ const App = () => {
         <Navbar/>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/movie/:id" element={<MoviesList />} />
-          <Route element={<MovieDetail />} />
+          <Route path="/movie/:id" element={<h1>Single movie detail</h1>} />
+          <Route path="/movies/:type" element={<MoviesList />} />
         </Routes>
       </Router>
     </div>

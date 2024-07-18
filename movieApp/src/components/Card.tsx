@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 interface CardProps {
@@ -21,9 +21,11 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, releaseDate, overview, rat
   }, []);
 
   return (
-    <div className="relative bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 w-full sm:w-80">
+    <div className="relative bg-gray-800 rounded-lg shadow-lg shadow-blue-900/50 overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 w-full sm:w-[95%]">
       {isLoading ? (
-        <Skeleton height={400} />
+        <SkeletonTheme baseColor="#121236" highlightColor="#3a3b92">
+          <Skeleton height={400} />
+        </SkeletonTheme>
       ) : (
         <img src={imageUrl} alt={title} className="w-full h-96 object-cover" />
       )}

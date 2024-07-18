@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-[#030637] mx-4 min-h-screen p-5 text-[#DDDDDD]">
+    <div className="bg-[#030637] mx-8 min-h-screen p-5 text-[#DDDDDD]">
       <Carousel
   showArrows={true}
   showThumbs={false}

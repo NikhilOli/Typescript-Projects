@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 
@@ -19,6 +19,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex gap-4">
+            <Link to="/" className="hover:text-[#BDBDD7]">Home</Link>
             <Link to="/movies/popular" className="hover:text-[#BDBDD7]">Popular</Link>
             <Link to="/movies/top-rated" className="hover:text-[#BDBDD7]">Top Rated</Link>
             <Link to="/movies/upcoming" className="hover:text-[#BDBDD7]">Upcoming</Link>
