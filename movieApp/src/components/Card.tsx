@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { Link } from 'react-router-dom';
 
 interface CardProps {
+  id: number;
   imageUrl: string;
   title: string;
   releaseDate: string;
@@ -10,7 +12,7 @@ interface CardProps {
   rating: number;
 }
 
-const Card: React.FC<CardProps> = ({ imageUrl, title, releaseDate, overview, rating }) => {
+const Card: React.FC<CardProps> = ({ id, imageUrl, title, releaseDate, overview, rating }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, releaseDate, overview, rat
   }, []);
 
   return (
+    <Link to={`/movie/${id}`}>
     <div className="relative bg-gray-800 rounded-lg shadow-lg shadow-blue-900/50 overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 w-full sm:w-[95%]">
       {isLoading ? (
         <SkeletonTheme baseColor="#121236" highlightColor="#3a3b92">
@@ -36,6 +39,7 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, releaseDate, overview, rat
         <p className="text-yellow-500 text-sm">Rating: {Math.round(rating)}/10</p>
       </div>
     </div>
+    </Link>
   );
 };
 

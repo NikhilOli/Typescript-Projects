@@ -13,6 +13,13 @@ interface Movie {
   backdrop_path: string;
 }
 
+const typeMapping: { [key: string]: string } = {
+  "top-rated": "top_rated",
+  "now-playing": "now_playing",
+  "upcoming": "upcoming",
+  "popular": "popular"
+};
+
 const MoviesList = () => {
 
   const [movieList, setMovieList] = useState<Movie[]>([])
@@ -26,8 +33,9 @@ const MoviesList = () => {
 
   const fetchMovies = async () => {
     try {
+      const apiType = typeMapping[type || "popular"];
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${type ? type : "popular"}?api_key=4e44d9029b1270a757cddc766a1bcb63&language=en-US`
+        `https://api.themoviedb.org/3/movie/${apiType}?api_key=4e44d9029b1270a757cddc766a1bcb63&language=en-US`
       );
       const data = res.data;
       setMovieList(data.results);
@@ -39,13 +47,14 @@ const MoviesList = () => {
   fetchMovies();
 
   return (
-    <div className="bg-[#030637] min-h-screen p-5 text-[#DDDDDD] mx-8">
+    <div className=" min-h-screen p-5 pt-0 text-[#DDDDDD] mx-8">
       <h1 className="text-4xl font-bold text-center mb-10">
         {(type ? type : "POPULAR").toUpperCase()}
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
         {movieList.map((movie) => (
           <Card
+            id={movie.id}
             key={movie.id}
             imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             title={movie.title}
