@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 const Navbar = () => {
   return (
     <div>
-      <div className="flex items-center justify-between px-10 mt-4 ">
+      <div className="flex items-center justify-between px-10 mx-4 my-6 ">
         <div className="flex items-center gap-x-20">
           <div>
             <Link to="/">
