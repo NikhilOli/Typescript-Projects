@@ -74,7 +74,7 @@ const Navbar = () => {
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div onClick={() => setIsOpen(!isOpen)} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <NavLink to="/" mobile>Home</NavLink>
           <NavLink to="/movies/popular" mobile>Popular</NavLink>
           <NavLink to="/movies/top-rated" mobile>Top Rated</NavLink>

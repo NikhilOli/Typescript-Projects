@@ -5,6 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
 import { FaStar, FaLanguage, FaClock, FaFire } from "react-icons/fa";
+import { format } from "date-fns";
 
 interface MovieDetailProps {
   id: number;
@@ -62,7 +63,7 @@ const MovieDetail = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="bg-[#030637] min-h-screen p-5 text-[#DDDDDD]"
+      className="min-h-screen p-5 text-[#DDDDDD]"
     >
       <div className="max-w-6xl mx-auto p-5 bg-[#1a1a2e] rounded-lg shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -86,7 +87,7 @@ const MovieDetail = () => {
           >
             <div>
               <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
-              <p className="text-gray-400 text-lg mb-2">Release Date: {movie.release_date}</p>
+              <p className="text-gray-400 text-lg mb-2">Release Date: {format(new Date(movie.release_date), 'MMM d, yyyy')}</p>
               <div className="flex items-center mb-2">
                 <FaStar className="text-yellow-500 mr-2" />
                 <p className="text-yellow-500 text-lg">Rating: {movie.vote_average}/10</p>
@@ -122,7 +123,7 @@ const MovieDetail = () => {
           transition={{ delay: 0.6 }}
           className="mt-10"
         >
-          <h2 className="text-3xl font-bold mb-4">Backdrop</h2>
+          <h2 className="text-3xl font-bold mb-4">Featured Image</h2>
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt={movie.title}

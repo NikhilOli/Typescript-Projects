@@ -4,6 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 import MoviesList from './MoviesList';
+import { format } from 'date-fns';
 
 interface Movie {
   id: number;
@@ -25,10 +26,11 @@ const Home: React.FC = () => {
         const res = await axios.get(
           'https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63&language=en-US'
         );
-        
         const data = res.data;
-        setPopularMovies(data.results);
-        setIsLoading(false);
+        setTimeout(() => {          
+          setPopularMovies(data.results);
+          setIsLoading(false);
+        }, 1000);
       } catch (error) {
         console.error('Error fetching popular movies:', error);
         setIsLoading(false);
@@ -97,7 +99,7 @@ const Home: React.FC = () => {
               />
               <div className="absolute bottom-0 left-0 right-0 bg-[#0306378e] bg-opacity-80 p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
                 <h2 className="text-2xl font-bold text-[#DDDDDD]">{movie.title}</h2>
-                <p className="text-gray-300 text-sm mb-2">Release Date: {movie.release_date}</p>
+                <p className="text-gray-300 text-sm mb-2">Release Date: {format(new Date(movie.release_date), 'MMM d, yyyy')}</p>
                 <p className="text-gray-300 text-sm">{movie.overview}</p>
               </div>
             </div>

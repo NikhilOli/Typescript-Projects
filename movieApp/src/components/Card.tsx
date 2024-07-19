@@ -3,6 +3,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { format } from 'date-fns';
 
 interface CardProps {
   id: number;
@@ -32,8 +33,17 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, title, releaseDate, overview,
       >
         {isLoading ? (
           <SkeletonTheme baseColor="#121236" highlightColor="#3a3b92">
-            <Skeleton height={400} />
-          </SkeletonTheme>
+          <div className="bg-[#1a1a2e] rounded-lg overflow-hidden shadow-lg p-4">
+              <Skeleton height={200} className="mb-4" />
+              <Skeleton width={150} height={24} className="mb-2" />
+              <Skeleton width={100} height={16} className="mb-4" />
+              <Skeleton count={3} className="mb-2" />
+              <div className="flex justify-between items-center">
+                  <Skeleton width={50} height={20} />
+                  <Skeleton width={50} height={20} />
+              </div>
+          </div>
+      </SkeletonTheme>
         ) : (
           <img src={imageUrl} alt={title} className="w-full h-96 object-cover" />
         )}
@@ -44,7 +54,7 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, title, releaseDate, overview,
           transition={{ duration: 0.3 }}
         >
           <h2 className="text-xl font-bold mb-2 text-center">{title}</h2>
-          <p className="text-gray-400 text-sm mb-2">Release Date: {releaseDate}</p>
+          <p className="text-gray-400 text-sm mb-2">Release Date: {format(new Date(releaseDate), 'MMM d, yyyy')}</p>
           <p className="text-gray-300 text-sm mb-2 text-center line-clamp-3">{overview}</p>
           <p className="text-yellow-500 text-sm">Rating: {Math.round(rating)}/10</p>
         </motion.div>
@@ -52,5 +62,18 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, title, releaseDate, overview,
     </Link>
   );
 };
+
+const SkeletonWrapper = ({ children }: { children: React.ReactNode }) => (
+  <div className="animate-pulse bg-[#1a1a2e] rounded-lg overflow-hidden shadow-lg p-4">
+      {children}
+  </div>
+);
+
+const CustomSkeleton = ({ width, height }: { width: string, height: string }) => (
+  <div 
+      className={`bg-[#3a3b92] rounded`}
+      style={{ width, height }}
+  />
+);
 
 export default Card;
