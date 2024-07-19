@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskCard from './TaskCard';
-import DropArea from './DropArea';
 import { TodoModel } from '../models/TodoModel';
+import { useDrop } from 'react-dnd';
 
 interface TaskColumnProps {
     heading: string;
@@ -10,24 +10,35 @@ interface TaskColumnProps {
     onDrop: (taskId: string, newStatus: string) => void;
     onDelete: (taskId: string) => void; 
     onUpdate: (updatedTask: TodoModel) => void; 
-
+    onReorder: (draggedId: string, hoverId: string) => void;
 }
 
-const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, onDrop, onDelete, onUpdate }) => {
+const TaskColumn: React.FC<TaskColumnProps> = ({ heading, icon, tasks, onDrop, onDelete, onUpdate, onReorder }) => {
+    const [, drop] = useDrop({
+        accept: 'TASK',
+        drop: (item: { id: string }) => {
+            onDrop(item.id, heading.toLowerCase());
+        },
+    });
+
     return (
-        <section className='w-1/3 mx-4'>
-            <h2 className='flex items-center gap-2 font-bold text-white mb-[15px]'>
-                <img className='w-[30px]' src={icon} alt="Icon" />
+        <section ref={drop} className=" bg-gray-200 h-full p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center text-gray-800">
+                <img src={icon} alt={heading} className="w-6 h-6 mr-2" />
                 {heading}
             </h2>
-            {tasks.map((task) => (
-                <React.Fragment key={task._id}>
-                    <TaskCard task={task} onDelete={onDelete} onUpdate={onUpdate} />
-                </React.Fragment>
-            ))}
-            <DropArea onDrop={onDrop} status={heading.toLowerCase()} />
+            <div className="space-y-3 md:space-y-4">
+                {tasks.map((task) => (
+                    <TaskCard 
+                        key={task._id} 
+                        task={task} 
+                        onDelete={onDelete} 
+                        onUpdate={onUpdate}
+                        onReorder={onReorder}
+                    />
+                ))}
+            </div>
         </section>
-
     );
 };
 

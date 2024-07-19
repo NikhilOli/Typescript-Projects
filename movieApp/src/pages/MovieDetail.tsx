@@ -90,7 +90,7 @@ const MovieDetail = () => {
               <p className="text-gray-400 text-lg mb-2">Release Date: {format(new Date(movie.release_date), 'MMM d, yyyy')}</p>
               <div className="flex items-center mb-2">
                 <FaStar className="text-yellow-500 mr-2" />
-                <p className="text-yellow-500 text-lg">Rating: {movie.vote_average}/10</p>
+                <p className="text-yellow-500 text-lg">Rating: {movie.vote_average.toFixed(1)}/10</p>
               </div>
               <p className="text-gray-300 mb-4">{movie.overview}</p>
               <div className="flex flex-wrap gap-2 mb-4">

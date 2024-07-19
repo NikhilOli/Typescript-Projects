@@ -36,8 +36,11 @@ const Home: React.FC = () => {
 
     const handleDrop = async (taskId: string, newStatus: string) => {
         try {
-            const trimmedStatus = newStatus.trim();
-            await updateTodoStatus(taskId, trimmedStatus);
+            let status = newStatus.toLowerCase();
+            if (status === "to do") {
+                status = "todo";
+            }
+            await updateTodoStatus(taskId, status);
         } catch (error) {
             console.error('Error updating todo status', error);
         }
@@ -51,17 +54,52 @@ const Home: React.FC = () => {
         setTodos(existingTodos => existingTodos.map(todo => todo._id === updatedTask._id ? updatedTask : todo));
     };
 
+    const handleReorder = (draggedId: string, hoverId: string) => {
+        setTodos((prevTodos) => {
+            const draggedIndex = prevTodos.findIndex((t) => t._id === draggedId);
+            const hoverIndex = prevTodos.findIndex((t) => t._id === hoverId);
+            const newTodos = [...prevTodos];
+            const [reorderedItem] = newTodos.splice(draggedIndex, 1);
+            newTodos.splice(hoverIndex, 0, reorderedItem);
+            return newTodos;
+        });
+    };
+
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className='bg-gray-800 min-h-screen text-white'>
-                <Header refreshTodos={getTodos} />
-                <main className='flex justify-evenly py-5 px-[8%]'>
-                    <TaskColumn heading="To Do" icon={todoIcon} tasks={todos.filter(todo => todo.status === 'todo')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate} />
-                    <TaskColumn heading="Doing" icon={doingIcon} tasks={todos.filter(todo => todo.status === 'doing')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate} />
-                    <TaskColumn heading="Done" icon={doneIcon} tasks={todos.filter(todo => todo.status === 'done')} onDrop={handleDrop} onDelete={handleDelete} onUpdate={handleUpdate}/>
-                </main>
-            </div>
-        </DndProvider>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+            <Header refreshTodos={getTodos} />
+            <main className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <TaskColumn 
+                    heading="To Do" 
+                    icon={todoIcon}
+                    tasks={todos.filter(todo => todo.status === 'todo')} 
+                    onDrop={handleDrop} 
+                    onDelete={handleDelete} 
+                    onUpdate={handleUpdate} 
+                    onReorder={handleReorder}
+                />
+                <TaskColumn 
+                    heading="Doing" 
+                    icon={doingIcon}
+                    tasks={todos.filter(todo => todo.status === 'doing')} 
+                    onDrop={handleDrop} 
+                    onDelete={handleDelete} 
+                    onUpdate={handleUpdate} 
+                    onReorder={handleReorder}
+                />
+                <TaskColumn 
+                    heading="Done" 
+                    icon={doneIcon}
+                    tasks={todos.filter(todo => todo.status === 'done')} 
+                    onDrop={handleDrop} 
+                    onDelete={handleDelete} 
+                    onUpdate={handleUpdate}
+                    onReorder={handleReorder}
+                />
+            </main>
+        </div>
+    </DndProvider>
     );
 };
 

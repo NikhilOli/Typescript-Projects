@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from './Button';
 
 interface HeaderProps {
     refreshTodos: () => void;
@@ -24,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ refreshTodos }) => {
 
             if (res.status === 201) {
                 setTask("");
-                refreshTodos(); // Refresh the todos list after a successful addition
+                refreshTodos();
             }
         } catch (error) {
             console.error('Error creating todo', error);
@@ -32,24 +33,23 @@ const Header: React.FC<HeaderProps> = ({ refreshTodos }) => {
     };
 
     return (
-        <header className='flex items-center justify-center border-b-[1px] border-b-[#dcdcdc] my-10 py-10'>
-            <form onSubmit={handleSubmit} className='w-[50%]'>
-                <input
-                    onChange={handleTask}
-                    value={task}
-                    className='text-xl border rounded-md px-3 py-2 mb-4 w-full border-[#dfe3e6] bg-[#f9f9f9] text-black placeholder-[#686868] font-medium'
-                    type="text"
-                    placeholder='Enter Your Task'
-                />
-                <div className='flex items-center justify-center gap-3'>
-                    <button
-                        type="submit"
-                        className='text-[16px] rounded-md font-medium bg-[#6457f9] h-10 py-[3px] px-[13px] text-white border-none cursor-pointer'
-                    >
-                        +Add Task
-                    </button>
-                </div>
-            </form>
+        <header className="bg-gray-100 shadow-sm mb-6">
+            <div className="max-w-7xl mx-auto py-4 md:py-6 px-4 sm:px-6 lg:px-8">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                    <input
+                        onChange={handleTask}
+                        value={task}
+                        className="w-full sm:flex-1 px-3 py-2 text-sm md:text-base border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-700"
+                        type="text"
+                        placeholder='Enter your task'
+                    />
+                    <Button
+                        title="Add Task"
+                        onClick={() => {}}
+                        className="w-full sm:w-auto px-4 py-2 bg-black text-white text-sm md:text-base rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    />
+                </form>
+            </div>
         </header>
     );
 };

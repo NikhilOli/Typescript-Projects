@@ -63,17 +63,4 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, title, releaseDate, overview,
   );
 };
 
-const SkeletonWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="animate-pulse bg-[#1a1a2e] rounded-lg overflow-hidden shadow-lg p-4">
-      {children}
-  </div>
-);
-
-const CustomSkeleton = ({ width, height }: { width: string, height: string }) => (
-  <div 
-      className={`bg-[#3a3b92] rounded`}
-      style={{ width, height }}
-  />
-);
-
 export default Card;
