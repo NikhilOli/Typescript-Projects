@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { motion } from "framer-motion";
+import { FaStar, FaLanguage, FaClock, FaFire } from "react-icons/fa";
 
 interface MovieDetailProps {
   id: number;
@@ -34,6 +36,7 @@ const MovieDetail = () => {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movie details:", error);
+        setIsLoading(false);
       }
     };
 
@@ -42,7 +45,7 @@ const MovieDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="min-h-screen flex justify-center items-center bg-[#030637]">
         <SkeletonTheme baseColor="#242424" highlightColor="#525252">
           <Skeleton height={600} width={400} />
         </SkeletonTheme>
@@ -51,25 +54,43 @@ const MovieDetail = () => {
   }
 
   if (!movie) {
-    return <div className="min-h-screen flex justify-center items-center">Movie not found</div>;
+    return <div className="min-h-screen flex justify-center items-center bg-[#030637] text-[#DDDDDD]">Movie not found</div>;
   }
 
   return (
-    <div className="bg-[#030637] min-h-screen p-5 text-[#DDDDDD]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="bg-[#030637] min-h-screen p-5 text-[#DDDDDD]"
+    >
       <div className="max-w-6xl mx-auto p-5 bg-[#1a1a2e] rounded-lg shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="md:col-span-1">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="md:col-span-1"
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               className="w-full h-full object-cover rounded-lg shadow-lg"
             />
-          </div>
-          <div className="md:col-span-2 flex flex-col justify-between">
+          </motion.div>
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="md:col-span-2 flex flex-col justify-between"
+          >
             <div>
               <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
               <p className="text-gray-400 text-lg mb-2">Release Date: {movie.release_date}</p>
-              <p className="text-yellow-500 text-lg mb-2">Rating: {movie.vote_average}/10</p>
+              <div className="flex items-center mb-2">
+                <FaStar className="text-yellow-500 mr-2" />
+                <p className="text-yellow-500 text-lg">Rating: {movie.vote_average}/10</p>
+              </div>
               <p className="text-gray-300 mb-4">{movie.overview}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {movie.genres.map((genre) => (
@@ -79,23 +100,37 @@ const MovieDetail = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <p><span className="font-bold">Runtime:</span> {movie.runtime} minutes</p>
-              <p><span className="font-bold">Language:</span> {movie.original_language.toUpperCase()}</p>
-              <p><span className="font-bold">Popularity:</span> {movie.popularity}</p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center">
+                <FaClock className="mr-2 text-blue-400" />
+                <p><span className="font-bold">Runtime:</span> {movie.runtime} minutes</p>
+              </div>
+              <div className="flex items-center">
+                <FaLanguage className="mr-2 text-green-400" />
+                <p><span className="font-bold">Language:</span> {movie.original_language.toUpperCase()}</p>
+              </div>
+              <div className="flex items-center">
+                <FaFire className="mr-2 text-red-400" />
+                <p><span className="font-bold">Popularity:</span> {movie.popularity.toFixed(0)}</p>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-        <div className="mt-10">
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-10"
+        >
           <h2 className="text-3xl font-bold mb-4">Backdrop</h2>
           <img
             src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
             alt={movie.title}
             className="w-full h-96 object-cover rounded-lg shadow-lg"
           />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
