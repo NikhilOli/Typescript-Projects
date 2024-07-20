@@ -56,9 +56,14 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onUpdate, onReorder
         setIsEditing(true);
     };
 
-    const handleSave = (updatedTask: TodoModel) => {
-        setIsEditing(false);
-        onUpdate(updatedTask);
+    const handleSave = async (updatedTask: TodoModel) => {
+        try {
+            const response = await axios.put(`/api/todos/${task._id}`, { todo: updatedTask.todo });
+            setIsEditing(false);
+            onUpdate(response.data);
+        } catch (error) {
+            console.error('Error updating todo', error);
+        }
     };
 
     return (

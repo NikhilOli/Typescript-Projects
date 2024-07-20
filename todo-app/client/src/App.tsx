@@ -4,17 +4,24 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
+import Navbar from './components/Navbar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
     return (
         <BrowserRouter>
-            <Toaster />
-            <Routes>
-                <Route path='/' element={<> <h1 className='text-white'>Main Page Content coming soon...</h1></>} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/dashboard' element={<Home />} />
-            </Routes>
+            <div className="flex flex-col h-screen">
+                <Toaster />
+                <Navbar />
+                <div className="flex-grow overflow-auto">
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/dashboard' element={<Dashboard />} />
+                    </Routes>
+                </div>
+            </div>
         </BrowserRouter>
     );
 }
