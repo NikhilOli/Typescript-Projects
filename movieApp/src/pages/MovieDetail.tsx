@@ -4,7 +4,7 @@ import axios from "axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
-import { FaStar, FaLanguage, FaClock, FaFire, FaLink, FaImdb, FaMoneyBillWave, FaTicketAlt } from "react-icons/fa";
+import { FaStar, FaLanguage, FaClock, FaFire, FaLink, FaImdb, FaMoneyBillWave, FaTicketAlt, FaCalendarAlt } from "react-icons/fa";
 import { format } from "date-fns";
 
 interface MovieDetailProps {
@@ -25,6 +25,8 @@ interface MovieDetailProps {
   budget: number;
   revenue: number;
   tagline: string;
+  status: string;
+  spoken_languages: { english_name: string }[];
 }
 
 const MovieDetail = () => {
@@ -112,6 +114,13 @@ const MovieDetail = () => {
               <p className="text-gray-300 text-lg mb-6">{movie.overview}</p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-center">
+                  <FaCalendarAlt className="text-blue-400 mr-3 text-xl" />
+                  <div>
+                    <p className="font-bold">Release Date</p>
+                    <p>{format(new Date(movie.release_date), 'MMMM d, yyyy')}</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
                   <FaStar className="text-yellow-500 mr-3 text-xl" />
                   <div>
                     <p className="font-bold">Rating</p>
@@ -119,17 +128,17 @@ const MovieDetail = () => {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FaClock className="text-blue-400 mr-3 text-xl" />
+                  <FaClock className="text-green-400 mr-3 text-xl" />
                   <div>
                     <p className="font-bold">Runtime</p>
                     <p>{movie.runtime} minutes</p>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FaLanguage className="text-green-400 mr-3 text-xl" />
+                  <FaLanguage className="text-purple-400 mr-3 text-xl" />
                   <div>
-                    <p className="font-bold">Language</p>
-                    <p>{movie.original_language.toUpperCase()}</p>
+                    <p className="font-bold">Languages</p>
+                    <p>{movie.spoken_languages.map(lang => lang.english_name).join(', ')}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -151,6 +160,13 @@ const MovieDetail = () => {
                   <div>
                     <p className="font-bold">Revenue</p>
                     <p>${movie.revenue.toLocaleString()}</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-6 h-6 rounded-full bg-blue-500 mr-3 flex items-center justify-center text-white font-bold">S</div>
+                  <div>
+                    <p className="font-bold">Status</p>
+                    <p>{movie.status}</p>
                   </div>
                 </div>
               </div>
@@ -181,19 +197,23 @@ const MovieDetail = () => {
           className="mt-12"
         >
           <h2 className="text-3xl font-bold mb-6 text-center">Production Companies</h2>
-          <div className="flex flex-wrap justify-start gap-8">
-          {movie.production_companies.map((company) => (
-                company.logo_path && (
-                  <div key={company.id} className="flex flex-col my-2 items-center">
-                    <img
-                      src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
-                      alt={company.name}
-                      className="h-16 object-contain mb-2"
-                    />
-                    <p className="text-center text-sm">{company.name}</p>
+          <div className="flex flex-wrap justify-center gap-8">
+            {movie.production_companies.map((company) => (
+              <div key={company.id} className="flex flex-col items-center">
+                {company.logo_path ? (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
+                    alt={company.name}
+                    className="w-40 h-32 object-contain mb-2 bg-gray-300 rounded-lg p-2"
+                  />
+                ) : (
+                  <div className="w-32 h-32 flex items-center justify-center bg-gray-800 rounded-lg mb-2">
+                    <span className="text-2xl font-bold">{company.name[0]}</span>
                   </div>
-                )
-              ))}
+                )}
+                <span className="text-center">{company.name}</span>
+              </div>
+            ))}
           </div>
         </motion.div>
         <motion.div
