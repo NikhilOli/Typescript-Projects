@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import Navigate from '../utils/Navigate';
+import { setToken, setUsernameFromBackend } from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -19,6 +21,8 @@ const Login: React.FC = () => {
 
             if (response.status === 200) {
                 toast.success('Login successful');
+                setToken(response.data.token);
+                setUsernameFromBackend(response.data.username);
                 setEmail('');
                 setPassword('');
                 navigateTo('/')
@@ -31,9 +35,9 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-800">
-            <div className="bg-gray-700 p-8 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center mb-4 text-white">Login</h2>
+        <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-xl shadow-2xl p-8 max-w-md w-full">
+                <h2 className="text-3xl font-bold text-center mb-6 text-white">Login</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label className="block text-white mb-2" htmlFor="email">
@@ -42,32 +46,40 @@ const Login: React.FC = () => {
                         <input
                             type="email"
                             id="email"
-                            className="w-full px-3 py-2 rounded-lg bg-gray-600 text-white border border-gray-500"
+                            className="w-full px-3 py-2 rounded-lg bg-white bg-opacity-20 text-white border border-white placeholder-gray-300"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            placeholder="Enter your email"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <label className="block text-white mb-2" htmlFor="password">
                             Password
                         </label>
                         <input
                             type="password"
                             id="password"
-                            className="w-full px-3 py-2 rounded-lg bg-gray-600 text-white border border-gray-500"
+                            className="w-full px-3 py-2 rounded-lg bg-white bg-opacity-20 text-white border border-white placeholder-gray-300"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            placeholder="Enter your password"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+                        className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
                     >
                         Login
                     </button>
                 </form>
+                <div className="mt-6 text-center">
+                    <p className="text-white">Don't have an account?</p>
+                    <Link to="/register" className="text-yellow-300 hover:text-yellow-400 font-bold">
+                        Register here
+                    </Link>
+                </div>
             </div>
         </div>
     );

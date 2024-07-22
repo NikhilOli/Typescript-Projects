@@ -69,18 +69,18 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onUpdate, onReorder
     return (
         <div
             ref={ref}
-            className={`bg-gray-900 border border-gray-200 rounded-md p-3 md:p-4 shadow-sm transition-all ${isDragging ? 'opacity-50' : ''}`}
+            className={`bg-white bg-opacity-30 border border-white rounded-md p-3 md:p-4 shadow-sm transition-all ${isDragging ? 'opacity-50' : ''}`}
         >
             {isEditing ? (
                 <EditTask task={task} onSave={handleSave} onCancel={() => setIsEditing(false)} />
             ) : (
                 <>
-                    <p className="text-sm md:text-base text-gray-100">{task.todo}</p>
+                    <p className="text-sm md:text-base text-white">{task.todo}</p>
                     <div className="flex justify-end mt-2 space-x-2">
-                        <button onClick={handleEdit} className="text-blue-600 hover:text-blue-700">
+                        <button onClick={handleEdit} className="text-yellow-300 hover:text-yellow-400">
                             <AiOutlineEdit className="w-4 h-4 md:w-5 md:h-5" />
                         </button>
-                        <button onClick={handleDelete} className="text-red-600 hover:text-red-700">
+                        <button onClick={handleDelete} className="text-red-400 hover:text-red-500">
                             <AiOutlineDelete className="w-4 h-4 md:w-5 md:h-5" />
                         </button>
                     </div>

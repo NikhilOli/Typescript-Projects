@@ -32,17 +32,17 @@ const EditTask: React.FC<EditTaskProps> = ({ task, onSave, onCancel }) => {
     };
 
     return (
-        <div className='flex flex-col items-start p-4 bg-gray-800 rounded-lg w-full'>
+        <div className='flex flex-col items-start p-4 bg-white bg-opacity-30 rounded-lg w-full'>
             <input
                 ref={inputRef}
-                className='w-full p-2 mb-4 text-black rounded-lg'
+                className='w-full p-2 mb-4 text-white bg-white bg-opacity-20 rounded-lg border border-white'
                 value={todo}
                 onChange={(e) => setTodo(e.target.value)}
                 onKeyDown={handleKeyDown}
             />
             <div className='flex gap-2'>
-                <Button title='Save' onClick={handleSave} className='bg-blue-500 text-white p-2 rounded-lg' />
-                <Button title='Cancel' onClick={onCancel} className='bg-red-500 text-white p-2 rounded-lg' />
+                <Button title='Save' onClick={handleSave} className='bg-yellow-400 text-gray-800 p-2 rounded-lg' />
+                <Button title='Cancel' onClick={onCancel} className='bg-red-400 text-white p-2 rounded-lg' />
             </div>
         </div>
     );

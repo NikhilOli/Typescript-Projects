@@ -17,15 +17,14 @@ const DropArea: React.FC<DropAreaProps> = ({ status, onDrop }) => {
         }),
     });
 
-    const borderColor = isOver ? '#dcdcdc' : 'transparent';
+    const borderColor = isOver ? 'border-yellow-300' : 'border-white border-opacity-50';
 
     return (
         <div
             ref={drop}
-            className='border w-full min-h-[100px] border-[#dcdcdc] rounded-lg p-4 m-[15px] opacity-100'
-            style={{ borderColor }}
+            className={`border w-full min-h-[100px] rounded-lg p-4 m-[15px] ${borderColor} bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg`}
         >
-            {isOver && 'Drop Here'}
+            {isOver && <p className="text-white text-center">Drop Here</p>}
         </div>
     );
 };
