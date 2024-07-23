@@ -13,7 +13,6 @@ import api from '../utils/api';
 interface TodosResponse {
     todos: TodoModel[];
 }
-
 const Dashboard: React.FC = () => {
     const [todos, setTodos] = useState<TodoModel[]>([]);
     const [loading, setLoading] = useState(true);
