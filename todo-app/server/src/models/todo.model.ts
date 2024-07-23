@@ -1,6 +1,10 @@
 import { InferSchemaType, Schema, model } from "mongoose";
 
 const todoSchema = new Schema({
+    postedBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
     todo: {
         type: String,
     },

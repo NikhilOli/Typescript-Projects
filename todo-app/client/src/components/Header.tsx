@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Button from './Button';
+import api from '../utils/api';
 
 interface HeaderProps {
     refreshTodos: () => void;
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ refreshTodos }) => {
                 todo: task,
             };
 
-            const res = await axios.post('/api/todos', newTodo);
+            const res = await api.post('/todos', newTodo);
 
             if (res.status === 201) {
                 setTask("");

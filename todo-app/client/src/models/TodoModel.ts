@@ -4,4 +4,5 @@ export interface TodoModel {
     status: string;
     createdAt: string;
     updatedAt: string;
+    postedBy: string;
 }

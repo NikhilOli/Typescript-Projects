@@ -11,4 +11,4 @@ userRoutes.post("/api/register", UserController.registerUser)
 userRoutes.post("/api/login", UserController.loginUser)
 userRoutes.get("/api/protected", authMiddleware, (req, res) => {
     res.json({ message: "This is a protected route" });
-  });
+});

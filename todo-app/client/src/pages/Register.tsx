@@ -19,7 +19,7 @@ const Register: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('/api/register', {
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/register`, {
                 username,
                 email,
                 password,

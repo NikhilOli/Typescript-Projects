@@ -1,15 +1,19 @@
-import { RequestHandler } from "express";
+import { RequestHandler, Request } from "express";
 import Todo from "../models/todo.model";
+import { AuthRequest } from "../types/express";
 
-const getTodos: RequestHandler = async (req, res) => {
+const getTodos: RequestHandler = async (req: AuthRequest, res) => {
     try {
-        const todos = await Todo.find();
-        res.status(200).send(todos);
+      if (!req.userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      const todos = await Todo.find({ postedBy: req.userId }).populate('postedBy', 'username');
+      res.status(200).json({ todos });
     } catch (error) {
-        console.error("Error getting todos", error);
-        res.status(500).json({ message: "Error getting todos" });
+      console.error("Error fetching todos:", error);
+      res.status(500).json({ message: "Server error", error });
     }
-};
+  };
 
 const updateTodoStatus: RequestHandler = async (req, res) => {
     const { todoId } = req.params;
@@ -33,17 +37,20 @@ const updateTodoStatus: RequestHandler = async (req, res) => {
     }
 };
 
-const createTodo: RequestHandler = async (req, res) => {
+const createTodo: RequestHandler = async (req: AuthRequest, res) => {
     const { todo } = req.body;
     try {
-        const newTodo = new Todo({ todo });
-        const savedTodo = await newTodo.save();
-        res.status(201).json(savedTodo);
+      if (!req.userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      const newTodo = new Todo({ todo, postedBy: req.userId });
+      const savedTodo = await newTodo.save();
+      res.status(201).json(savedTodo);
     } catch (error) {
-        console.error("Error creating todo", error);
-        res.status(500).json({ message: "Error creating todo" });
+      console.error("Error creating todo", error);
+      res.status(500).json({ message: "Error creating todo" });
     }
-};
+  };
 
 const getTodo: RequestHandler = async (req, res) => {
     const { todoId } = req.params;

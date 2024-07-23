@@ -2,12 +2,12 @@ import axios from 'axios';
 import { getToken } from './auth';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${import.meta.env.VITE_SERVER_URL}/api`,
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = getToken();
+    const token = getToken();    
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

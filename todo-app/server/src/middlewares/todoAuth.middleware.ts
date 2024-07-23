@@ -1,12 +1,14 @@
+// todoAuthMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AuthRequest } from '../types/express';
 
-export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const todoAuthMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
+    req.userId = undefined;
+    return next();
   }
 
   try {
@@ -15,6 +17,7 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
     req.username = decoded.username;
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Token is not valid' });
+    req.userId = undefined;
+    next();
   }
 };

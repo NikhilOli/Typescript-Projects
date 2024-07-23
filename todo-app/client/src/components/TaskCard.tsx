@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { TodoModel } from '../models/TodoModel';
-import axios from 'axios';
 import EditTask from './EditTask';
+import api from '../utils/api';
 
 interface TaskCardProps {
     task: TodoModel;
@@ -26,7 +26,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onUpdate, onReorder
 
     const [, drop] = useDrop({
         accept: 'TASK',
-        hover(item: { id: string }, monitor) {
+        hover(item: { id: string, status: string }) {
             if (!ref.current) {
                 return;
             }
@@ -45,7 +45,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onUpdate, onReorder
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`/api/todos/${task._id}`);
+            await api.delete(`/todos/${task._id}`);
             onDelete(task._id);
         } catch (error) {
             console.error('Error deleting todo', error);
@@ -58,7 +58,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onUpdate, onReorder
 
     const handleSave = async (updatedTask: TodoModel) => {
         try {
-            const response = await axios.put(`/api/todos/${task._id}`, { todo: updatedTask.todo });
+            const response = await api.put(`/todos/${task._id}`, { todo: updatedTask.todo });
             setIsEditing(false);
             onUpdate(response.data);
         } catch (error) {

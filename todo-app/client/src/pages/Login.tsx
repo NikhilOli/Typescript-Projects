@@ -11,28 +11,37 @@ const Login: React.FC = () => {
     const { navigateTo } = Navigate();
 
     const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
+    event.preventDefault();
+    console.log("Attempting login with:", { email, password });
 
-        try {
-            const response = await axios.post('/api/login', {
-                email,
-                password,
-            });
+    try {
+        console.log("Sending request to:", `${import.meta.env.VITE_SERVER_URL}/api/login`);
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/login`, {
+            email,
+            password,
+        });
 
-            if (response.status === 200) {
-                toast.success('Login successful');
-                setToken(response.data.token);
-                setUsernameFromBackend(response.data.username);
-                setEmail('');
-                setPassword('');
-                navigateTo('/')
-            } else {
-                toast.error(response.data.message || 'Login failed');
-            }
-        } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Login failed');
+        console.log("Login response:", response);
+
+        if (response.status === 200) {
+            console.log("Login successful, token:", response.data.token);
+            console.log(response.data);
+            
+            toast.success('Login successful');
+            setToken(response.data.token);                
+            setUsernameFromBackend(response.data.username);
+            setEmail('');
+            setPassword('');
+            navigateTo('/')
+        } else {
+            console.log("Login failed:", response.data.message);
+            toast.error(response.data.message || 'Login failed');
         }
-    };
+    } catch (error: any) {
+        console.error("Login error:", error.response?.data || error.message);
+        toast.error(error.response?.data?.message || 'Login failed');
+    }
+};
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4">

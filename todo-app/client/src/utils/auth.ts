@@ -1,9 +1,10 @@
-export const setToken = (token: string) => {
+export const setToken = (token: string) => {  
     localStorage.setItem('token', token);
   };
   
   export const getToken = () => {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+  return token;
   };
   
   export const removeToken = () => {
@@ -17,9 +18,15 @@ export const setToken = (token: string) => {
   export const setUsernameFromBackend = (username: string) => {
     localStorage.setItem('username', username);
   };
+  export const setUserIdFromBackend = (userId: string) => {
+    localStorage.setItem('userId', userId);
+  };
   
   export const getUsername = () => {
     return localStorage.getItem('username');
+  };
+  export const getUserId = () => {
+    return localStorage.getItem('userId');
   };
   
   export const removeUsername = () => {
