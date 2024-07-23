@@ -7,14 +7,14 @@ import Header from '../components/Header';
 import TaskColumn from '../components/TaskColumn';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { getUserId, getUsername } from '../utils/auth';
+import { getUsername } from '../utils/auth';
 import api from '../utils/api';
 
 interface TodosResponse {
     todos: TodoModel[];
-  }
+}
 
-  const Dashboard: React.FC = () => {
+const Dashboard: React.FC = () => {
     const [todos, setTodos] = useState<TodoModel[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -24,7 +24,6 @@ interface TodosResponse {
             const res = await api.get<TodosResponse>('/todos');
             
             setTodos(res.data.todos);
-            console.log("Todossss data in frontend",res.data);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching todos', error);

@@ -15,18 +15,12 @@ const Login: React.FC = () => {
     console.log("Attempting login with:", { email, password });
 
     try {
-        console.log("Sending request to:", `${import.meta.env.VITE_SERVER_URL}/api/login`);
         const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/login`, {
             email,
             password,
         });
 
-        console.log("Login response:", response);
-
         if (response.status === 200) {
-            console.log("Login successful, token:", response.data.token);
-            console.log(response.data);
-            
             toast.success('Login successful');
             setToken(response.data.token);                
             setUsernameFromBackend(response.data.username);
@@ -34,7 +28,6 @@ const Login: React.FC = () => {
             setPassword('');
             navigateTo('/')
         } else {
-            console.log("Login failed:", response.data.message);
             toast.error(response.data.message || 'Login failed');
         }
     } catch (error: any) {
