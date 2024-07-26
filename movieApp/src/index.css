@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+    background-color: #ff6f61;
+    color: #ffffff;
+}
+
 body {
     background: #030637;
     color: #DDDDDD;
 }
+
