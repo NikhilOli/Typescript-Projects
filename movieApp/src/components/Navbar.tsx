@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
+import {logo} from "../assets/Movie-haven.jpg"
 
 interface NavLinkProps {
   to: string;
@@ -20,8 +21,9 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/2560px-IMDB_Logo_2016.svg.png"
-                alt="IMDb Logo"
+                //src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/2560px-IMDB_Logo_2016.svg.png"
+                src={logo}
+                alt="MovieHaven Logo"
                 className="h-8 w-auto"
               />
             </Link>
