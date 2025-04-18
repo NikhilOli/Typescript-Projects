@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
-import {logo} from "../assets/Movie-haven.jpg"
+import logo from "../assets/Movie-haven.jpg"
 
 interface NavLinkProps {
   to: string;
