@@ -20,12 +20,15 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <img
+{/*               <img
                 //src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/2560px-IMDB_Logo_2016.svg.png"
                 src={logo}
                 alt="MovieHaven Logo"
                 className="h-8 w-auto"
-              />
+              /> */}
+              <h2 className="text-2xl font-bold tracking-wide text-[#DDDDDD] hover:text-[#BDBDD7] transition duration-300">
+                Movie Haven
+              </h2>
             </Link>
           </div>
           <div className="hidden md:block">
