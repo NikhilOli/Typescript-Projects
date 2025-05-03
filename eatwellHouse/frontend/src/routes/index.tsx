@@ -1,12 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Button } from '../components/ui/button'
+import HomePage from '../ui/pages/HomePage'
+
 
 export const Route = createFileRoute('/')({
-  component: RouteComponent,
+  component: () => <HomePage />,
 })
 
-function RouteComponent() {
-  return <div>Hello "/"!
-    <Button>Nikhil</Button>
-  </div>
-}
