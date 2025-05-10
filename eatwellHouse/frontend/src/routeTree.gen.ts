@@ -13,6 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as LocationImport } from './routes/location'
 import { Route as IndexImport } from './routes/index'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as DashboardOrdersImport } from './routes/dashboard/orders'
+import { Route as DashboardAccountImport } from './routes/dashboard/account'
 
 // Create/Update Routes
 
@@ -25,6 +28,24 @@ const LocationRoute = LocationImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardOrdersRoute = DashboardOrdersImport.update({
+  id: '/dashboard/orders',
+  path: '/dashboard/orders',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardAccountRoute = DashboardAccountImport.update({
+  id: '/dashboard/account',
+  path: '/dashboard/account',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +67,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocationImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/account': {
+      id: '/dashboard/account'
+      path: '/dashboard/account'
+      fullPath: '/dashboard/account'
+      preLoaderRoute: typeof DashboardAccountImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/orders': {
+      id: '/dashboard/orders'
+      path: '/dashboard/orders'
+      fullPath: '/dashboard/orders'
+      preLoaderRoute: typeof DashboardOrdersImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +96,67 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/dashboard/account': typeof DashboardAccountRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/location'
+  fullPaths:
+    | '/'
+    | '/location'
+    | '/dashboard/account'
+    | '/dashboard/orders'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/location'
-  id: '__root__' | '/' | '/location'
+  to:
+    | '/'
+    | '/location'
+    | '/dashboard/account'
+    | '/dashboard/orders'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/location'
+    | '/dashboard/account'
+    | '/dashboard/orders'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocationRoute: typeof LocationRoute
+  DashboardAccountRoute: typeof DashboardAccountRoute
+  DashboardOrdersRoute: typeof DashboardOrdersRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocationRoute: LocationRoute,
+  DashboardAccountRoute: DashboardAccountRoute,
+  DashboardOrdersRoute: DashboardOrdersRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +170,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/location"
+        "/location",
+        "/dashboard/account",
+        "/dashboard/orders",
+        "/dashboard/"
       ]
     },
     "/": {
@@ -105,6 +181,15 @@ export const routeTree = rootRoute
     },
     "/location": {
       "filePath": "location.tsx"
+    },
+    "/dashboard/account": {
+      "filePath": "dashboard/account.tsx"
+    },
+    "/dashboard/orders": {
+      "filePath": "dashboard/orders.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx"
     }
   }
 }
