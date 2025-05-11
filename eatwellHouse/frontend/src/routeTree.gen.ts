@@ -14,8 +14,10 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LocationImport } from './routes/location'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as AdminDashboardIndexImport } from './routes/admin-dashboard/index'
 import { Route as DashboardOrdersImport } from './routes/dashboard/orders'
 import { Route as DashboardAccountImport } from './routes/dashboard/account'
+import { Route as AdminDashboardCategoryImport } from './routes/admin-dashboard/category'
 
 // Create/Update Routes
 
@@ -37,6 +39,12 @@ const DashboardIndexRoute = DashboardIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminDashboardIndexRoute = AdminDashboardIndexImport.update({
+  id: '/admin-dashboard/',
+  path: '/admin-dashboard/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardOrdersRoute = DashboardOrdersImport.update({
   id: '/dashboard/orders',
   path: '/dashboard/orders',
@@ -46,6 +54,12 @@ const DashboardOrdersRoute = DashboardOrdersImport.update({
 const DashboardAccountRoute = DashboardAccountImport.update({
   id: '/dashboard/account',
   path: '/dashboard/account',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminDashboardCategoryRoute = AdminDashboardCategoryImport.update({
+  id: '/admin-dashboard/category',
+  path: '/admin-dashboard/category',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocationImport
       parentRoute: typeof rootRoute
     }
+    '/admin-dashboard/category': {
+      id: '/admin-dashboard/category'
+      path: '/admin-dashboard/category'
+      fullPath: '/admin-dashboard/category'
+      preLoaderRoute: typeof AdminDashboardCategoryImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/account': {
       id: '/dashboard/account'
       path: '/dashboard/account'
@@ -79,6 +100,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/orders'
       fullPath: '/dashboard/orders'
       preLoaderRoute: typeof DashboardOrdersImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin-dashboard/': {
+      id: '/admin-dashboard/'
+      path: '/admin-dashboard'
+      fullPath: '/admin-dashboard'
+      preLoaderRoute: typeof AdminDashboardIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/': {
@@ -96,16 +124,20 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
+  '/admin-dashboard': typeof AdminDashboardIndexRoute
   '/dashboard': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
+  '/admin-dashboard': typeof AdminDashboardIndexRoute
   '/dashboard': typeof DashboardIndexRoute
 }
 
@@ -113,8 +145,10 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
+  '/admin-dashboard/': typeof AdminDashboardIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 
@@ -123,22 +157,28 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/location'
+    | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
+    | '/admin-dashboard'
     | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/location'
+    | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
+    | '/admin-dashboard'
     | '/dashboard'
   id:
     | '__root__'
     | '/'
     | '/location'
+    | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
+    | '/admin-dashboard/'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -146,16 +186,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocationRoute: typeof LocationRoute
+  AdminDashboardCategoryRoute: typeof AdminDashboardCategoryRoute
   DashboardAccountRoute: typeof DashboardAccountRoute
   DashboardOrdersRoute: typeof DashboardOrdersRoute
+  AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocationRoute: LocationRoute,
+  AdminDashboardCategoryRoute: AdminDashboardCategoryRoute,
   DashboardAccountRoute: DashboardAccountRoute,
   DashboardOrdersRoute: DashboardOrdersRoute,
+  AdminDashboardIndexRoute: AdminDashboardIndexRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
@@ -171,8 +215,10 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/location",
+        "/admin-dashboard/category",
         "/dashboard/account",
         "/dashboard/orders",
+        "/admin-dashboard/",
         "/dashboard/"
       ]
     },
@@ -182,11 +228,17 @@ export const routeTree = rootRoute
     "/location": {
       "filePath": "location.tsx"
     },
+    "/admin-dashboard/category": {
+      "filePath": "admin-dashboard/category.tsx"
+    },
     "/dashboard/account": {
       "filePath": "dashboard/account.tsx"
     },
     "/dashboard/orders": {
       "filePath": "dashboard/orders.tsx"
+    },
+    "/admin-dashboard/": {
+      "filePath": "admin-dashboard/index.tsx"
     },
     "/dashboard/": {
       "filePath": "dashboard/index.tsx"

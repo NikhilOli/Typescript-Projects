@@ -41,3 +41,47 @@ enum MetaType {
   Privacy_Policy
   Terms_And_Conditions
 }
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  thumbnail Media? 
+  createdAt DateTime @default(now())
+  foods Food[]
+}
+
+model Food {
+  id Int @id @default(autoincrement())
+  name String
+  spicyness FoodSpicyness
+  description String
+  price Float
+  quantity Int @default(0)
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  media Media?
+}
+
+enum FoodSpicyness {
+  NOT_SPICY
+  MILD
+  MEDIUM
+  HOT
+  EXTRA_HOT
+}
+
+enum MediaType {
+  CATEGORY_IMAGE
+  FOOD_IMAGE
+}
+model Media {
+  id Int @id @default(autoincrement())
+  url String
+  mediaType MediaType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  food Food? @relation(fields: [foodId], references: [id])
+  foodId Int? @unique
+  category Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int? @unique
+}
