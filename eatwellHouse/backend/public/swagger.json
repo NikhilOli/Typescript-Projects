@@ -6,7 +6,15 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"_36_Enums.MediaType": {
+				"type": "string",
+				"enum": [
+					"CATEGORY_IMAGE",
+					"FOOD_IMAGE"
+				]
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -27,16 +35,80 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"data": {
-											"items": {},
-											"type": "array"
-										}
+									"items": {
+										"allOf": [
+											{
+												"properties": {
+													"thumbnail": {
+														"properties": {
+															"categoryId": {
+																"type": "number",
+																"format": "double"
+															},
+															"foodId": {
+																"type": "number",
+																"format": "double"
+															},
+															"updatedAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"mediaType": {
+																"$ref": "#/components/schemas/_36_Enums.MediaType"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"name": {
+																"type": "string"
+															},
+															"id": {
+																"type": "number",
+																"format": "double"
+															}
+														},
+														"required": [
+															"categoryId",
+															"foodId",
+															"updatedAt",
+															"mediaType",
+															"createdAt",
+															"name",
+															"id"
+														],
+														"type": "object"
+													}
+												},
+												"required": [
+													"thumbnail"
+												],
+												"type": "object"
+											},
+											{
+												"properties": {
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"name": {
+														"type": "string"
+													},
+													"id": {
+														"type": "number",
+														"format": "double"
+													}
+												},
+												"required": [
+													"createdAt",
+													"name",
+													"id"
+												],
+												"type": "object"
+											}
+										]
 									},
-									"required": [
-										"data"
-									],
-									"type": "object"
+									"type": "array"
 								}
 							}
 						}
@@ -54,12 +126,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"message": {
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"name": {
 											"type": "string"
+										},
+										"id": {
+											"type": "number",
+											"format": "double"
 										}
 									},
 									"required": [
-										"message"
+										"createdAt",
+										"name",
+										"id"
 									],
 									"type": "object"
 								}

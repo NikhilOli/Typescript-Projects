@@ -14,6 +14,11 @@ const multer = require('multer');
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "_36_Enums.MediaType": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["CATEGORY_IMAGE"]},{"dataType":"enum","enums":["FOOD_IMAGE"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
 
@@ -62,7 +67,7 @@ export function RegisterRoutes(app: Router,opts?:{multer?:ReturnType<typeof mult
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsCategoryController_createCategory: Record<string, TsoaRoute.ParameterSchema> = {
-                name: {"in":"formData","name":"name","required":true,"dataType":"string"},
+                categoryName: {"in":"formData","name":"name","required":true,"dataType":"string"},
                 file: {"in":"formData","name":"file","required":true,"dataType":"file"},
         };
         app.post('/category',
