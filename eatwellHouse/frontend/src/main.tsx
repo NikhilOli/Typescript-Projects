@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import './index.css'
 import './assets/css/globals.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
+import { Toaster } from './ui/shadcn/sonner'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -20,9 +22,13 @@ declare module '@tanstack/react-router' {
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
+  const queryClient = new QueryClient()
   root.render(
     <StrictMode>
+      <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster />
+    </QueryClientProvider>
     </StrictMode>,
   )
 }
