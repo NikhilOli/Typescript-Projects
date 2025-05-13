@@ -53,21 +53,15 @@ model Category {
 model Food {
   id Int @id @default(autoincrement())
   name String
-  spicyness FoodSpicyness
-  description String
+  hasSpicyness Boolean @default(false)
   price Float
   quantity Int @default(0)
+  isAvailable Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-  media Media?
-}
-
-enum FoodSpicyness {
-  NOT_SPICY
-  MILD
-  MEDIUM
-  HOT
-  EXTRA_HOT
+  image Media?
 }
 
 enum MediaType {

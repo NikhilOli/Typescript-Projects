@@ -1,4 +1,4 @@
-import { ListOrdered, Lock, User } from "lucide-react";
+import { House, Lock, Pizza, UtensilsCrossed } from "lucide-react";
 import {
 Sidebar,
 SidebarContent,
@@ -16,12 +16,17 @@ const items = [
 {
     title: "Home",
     url: "/admin-dashboard",
-    icon: ListOrdered,
+    icon: House,
 },
 {
     title: "Food Category",
     url: "/admin-dashboard/category",
-    icon: User,
+    icon: UtensilsCrossed,
+},
+{
+    title: "Foods",
+    url: "/admin-dashboard/add-food",
+    icon: Pizza,
 },
 {
     title: "Orders", 

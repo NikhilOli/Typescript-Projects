@@ -18,6 +18,7 @@ import { Route as AdminDashboardIndexImport } from './routes/admin-dashboard/ind
 import { Route as DashboardOrdersImport } from './routes/dashboard/orders'
 import { Route as DashboardAccountImport } from './routes/dashboard/account'
 import { Route as AdminDashboardCategoryImport } from './routes/admin-dashboard/category'
+import { Route as AdminDashboardAddFoodImport } from './routes/admin-dashboard/add-food'
 
 // Create/Update Routes
 
@@ -63,6 +64,12 @@ const AdminDashboardCategoryRoute = AdminDashboardCategoryImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminDashboardAddFoodRoute = AdminDashboardAddFoodImport.update({
+  id: '/admin-dashboard/add-food',
+  path: '/admin-dashboard/add-food',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -79,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/location'
       fullPath: '/location'
       preLoaderRoute: typeof LocationImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin-dashboard/add-food': {
+      id: '/admin-dashboard/add-food'
+      path: '/admin-dashboard/add-food'
+      fullPath: '/admin-dashboard/add-food'
+      preLoaderRoute: typeof AdminDashboardAddFoodImport
       parentRoute: typeof rootRoute
     }
     '/admin-dashboard/category': {
@@ -124,6 +138,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/add-food': typeof AdminDashboardAddFoodRoute
   '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
@@ -134,6 +149,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/add-food': typeof AdminDashboardAddFoodRoute
   '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
@@ -145,6 +161,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/location': typeof LocationRoute
+  '/admin-dashboard/add-food': typeof AdminDashboardAddFoodRoute
   '/admin-dashboard/category': typeof AdminDashboardCategoryRoute
   '/dashboard/account': typeof DashboardAccountRoute
   '/dashboard/orders': typeof DashboardOrdersRoute
@@ -157,6 +174,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/location'
+    | '/admin-dashboard/add-food'
     | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
@@ -166,6 +184,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/location'
+    | '/admin-dashboard/add-food'
     | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
@@ -175,6 +194,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/location'
+    | '/admin-dashboard/add-food'
     | '/admin-dashboard/category'
     | '/dashboard/account'
     | '/dashboard/orders'
@@ -186,6 +206,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocationRoute: typeof LocationRoute
+  AdminDashboardAddFoodRoute: typeof AdminDashboardAddFoodRoute
   AdminDashboardCategoryRoute: typeof AdminDashboardCategoryRoute
   DashboardAccountRoute: typeof DashboardAccountRoute
   DashboardOrdersRoute: typeof DashboardOrdersRoute
@@ -196,6 +217,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocationRoute: LocationRoute,
+  AdminDashboardAddFoodRoute: AdminDashboardAddFoodRoute,
   AdminDashboardCategoryRoute: AdminDashboardCategoryRoute,
   DashboardAccountRoute: DashboardAccountRoute,
   DashboardOrdersRoute: DashboardOrdersRoute,
@@ -215,6 +237,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/location",
+        "/admin-dashboard/add-food",
         "/admin-dashboard/category",
         "/dashboard/account",
         "/dashboard/orders",
@@ -227,6 +250,9 @@ export const routeTree = rootRoute
     },
     "/location": {
       "filePath": "location.tsx"
+    },
+    "/admin-dashboard/add-food": {
+      "filePath": "admin-dashboard/add-food.tsx"
     },
     "/admin-dashboard/category": {
       "filePath": "admin-dashboard/category.tsx"
